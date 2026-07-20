@@ -146,7 +146,7 @@ public:
         // Check if value already exists for this key
         if (pos < node.count && key == node.keys[pos]) {
             // Key exists, check if value already present
-            auto it = find(node.values.begin(), node.values.end(), value);
+            auto it = std::find(node.values.begin(), node.values.end(), value);
             if (it != node.values.end()) return; // Value already exists
             
             // Insert value maintaining sorted order
@@ -278,7 +278,7 @@ public:
         }
         
         // Find value in values
-        auto it = find(node.values.begin(), node.values.end(), value);
+        auto it = std::find(node.values.begin(), node.values.end(), value);
         if (it == node.values.end()) {
             return; // Value not found
         }
