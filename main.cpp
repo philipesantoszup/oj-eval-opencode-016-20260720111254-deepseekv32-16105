@@ -1,10 +1,7 @@
 #include <iostream>
-#include <fstream>
 #include <string>
-#include <vector>
-#include <algorithm>
-#include <cstring>
 #include <unordered_map>
+#include <set>
 
 using namespace std;
 
@@ -12,7 +9,7 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
     
-    unordered_map<string, vector<int>> database;
+    unordered_map<string, set<int>> database;
     
     int n;
     cin >> n;
@@ -25,12 +22,7 @@ int main() {
             string index;
             int value;
             cin >> index >> value;
-            auto& vec = database[index];
-            // Insert maintaining sorted order using binary search
-            auto it = lower_bound(vec.begin(), vec.end(), value);
-            if (it == vec.end() || *it != value) {
-                vec.insert(it, value);
-            }
+            database[index].insert(value);
         }
         else if (command == "delete") {
             string index;
@@ -38,13 +30,9 @@ int main() {
             cin >> index >> value;
             auto it = database.find(index);
             if (it != database.end()) {
-                auto& vec = it->second;
-                auto val_it = lower_bound(vec.begin(), vec.end(), value);
-                if (val_it != vec.end() && *val_it == value) {
-                    vec.erase(val_it);
-                    if (vec.empty()) {
-                        database.erase(it);
-                    }
+                it->second.erase(value);
+                if (it->second.empty()) {
+                    database.erase(it);
                 }
             }
         }
